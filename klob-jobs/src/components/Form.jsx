@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addNewJob } from "../store/actionCreator";
+import { addNewJob, generateJobVacancyCode } from "../store/actionCreator";
 import { useDispatch } from "react-redux";
+
 
 export default function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  let newCode = generateJobVacancyCode()
+  
 
   const [submitJob, setSubmitJob] = useState({
+    jobVacancyCode: newCode,
     corporateLogo: "",
     corporateName: "",
     positionName: "",
@@ -20,7 +24,9 @@ export default function Home() {
 
   const handleChange = (e) => {
     e.preventDefault();
+
     const { value, name } = e.target;
+    console.log(value, name);
     setSubmitJob({
       ...submitJob,
       [name]: value,
@@ -29,7 +35,7 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(submitJob, "Dati add");
+   
 
     dispatch(addNewJob(submitJob));
     navigate("/");

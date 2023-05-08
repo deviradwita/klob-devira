@@ -1,5 +1,5 @@
 import { formatCurrency, formatDate } from "../store/actionCreator";
-
+import { Link } from "react-router-dom";
 
 export default function Card({jobs}) {
 
@@ -29,9 +29,12 @@ export default function Card({jobs}) {
           </span>
         </p>
         <p className="small text-muted font-italic text-right" style={{textAlign: "right"}}>{formatDate(jobs.postedDate)}</p>
+        <Link to={`/detail-lowongan-perkerjaan/${jobs.jobVacancyCode}`}>
         <button className="btn btn-outline-primary w-100">
           Baca Detail
         </button>
+        </Link>
+       
         <button className="btn btn-success w-100 mt-3">
           Kirim Lamaran
         </button>

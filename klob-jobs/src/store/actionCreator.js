@@ -12,6 +12,13 @@ export function addJobs(payload) {
   };
 }
 
+export function fetchMyDetail(payload){
+  return {
+      type : "job/fetchSuccess",
+      payload : payload
+  }
+}
+
 export function fetchJobs() {
   return async function (dispatch, getState) {
     try {
@@ -47,6 +54,24 @@ export function addNewJob(newJob) {
   };
 }
 
+export function fetchDetail(jobVacancyCode) {
+  return async function (dispatch, getState) {
+    try {
+      let existingData = getState()
+    
+    
+      let detail = existingData.Jobs.filter(el => el.jobVacancyCode === jobVacancyCode);
+      // console.log(detail, "action");
+      dispatch(fetchMyDetail(detail));
+
+     
+
+    } catch (error) {
+      console.log(error, "ini error");
+    }
+  };
+}
+
 export function formatCurrency(number) {
   const formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -57,7 +82,35 @@ export function formatCurrency(number) {
 }
 
 export function formatDate(dateString) {
-  const [year, month, day] = dateString.split("-");
-  const shortYear = year.slice(-2);
-  return `${day}/${month}/${shortYear}`;
+  
+  // const [year, month, day] = dateString?.split("-");
+  // const shortYear = year.slice(-2);
+  // return `${day}/${month}/${shortYear}`;
+
+  const [year, month, day] = dateString.split("-").map(Number);
+  const now = new Date();
+  const elapsedYears = now.getFullYear() - year;
+  const elapsedMonths = now.getMonth() - month;
+  
+  if (elapsedYears > 0) {
+    return `${elapsedYears} Tahun yang lalu`;
+  } else if (elapsedMonths > 0) {
+    return `${elapsedMonths} Bulan yang lalu`;
+  } else {
+    return "Kurang dari sebulan";
+  }
+}
+
+
+export function generateJobVacancyCode() {
+  const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const NUMBERS = "0123456789";
+  let code = "KVC";
+  for (let i = 0; i < 3; i++) {
+    code += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
+  }
+  code += NUMBERS.charAt(Math.floor(Math.random() * NUMBERS.length));
+  code += NUMBERS.charAt(Math.floor(Math.random() * NUMBERS.length));
+  code += NUMBERS.charAt(Math.floor(Math.random() * NUMBERS.length));
+  return code;
 }

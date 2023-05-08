@@ -5,6 +5,7 @@ import CardJobs from "../components/Card";
 import { fetchJobs } from "../store/actionCreator";
 
 
+
 export default function Home() {
   const jobs = useSelector((state) => {
     console.log(state, "home");
@@ -21,8 +22,8 @@ export default function Home() {
         <h1 className="lowongan">Lowongan Perkerjaan:</h1>
         <div>
         <div className="row pb-5 mb-4">
-          {jobs?.map(el => {
-            return <CardJobs key={el.id} jobs={el}  />;
+          {jobs?.map((el, index) => {
+            return <CardJobs key={index} jobs={el}  />;
           })}
           </div>
         </div>

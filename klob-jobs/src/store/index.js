@@ -5,7 +5,8 @@ import storage from "redux-persist/lib/storage";
 
 
 const initialState = {
-    Jobs: []
+    Jobs: [],
+    detail : {}
 };
 
 const persistConfig = {
@@ -24,8 +25,12 @@ export function JobsReducer(state = initialState, action) {
       ...state,
       Jobs: [...state.Jobs, action.payload],
     };
-  } 
-  else {
+  }  else if (action.type === "job/fetchSuccess") {
+    return {
+      ...state,
+      detail: action.payload,
+    };
+  } else {
     return state;
   }
 }
@@ -36,6 +41,9 @@ const persistedReducer = persistReducer(persistConfig, JobsReducer);
 let store = createStore(persistedReducer, applyMiddleware(thunk));
 
 let persistor = persistStore(store);
+
+// Invoke persistor.purge() to delete persisted data
+// persistor.purge();
 
 export { store, persistor };
 

@@ -7,6 +7,7 @@ import {store, persistor} from './store'
 import Home from "./views/Home";
 import Layout from "./views/Layout";
 import Form from "./components/Form";
+import Detail from "./views/Detail";
 
 
 
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
         {
           path: "/buat-lowongan-kerja",
           element: <Form/>,
+        },
+        {
+          path: "/detail-lowongan-perkerjaan/:jobVacancyCode",
+          element: <Detail/>,
         },
        
 
