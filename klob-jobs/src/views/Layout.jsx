@@ -1,0 +1,15 @@
+import NavbarMenu from "../components/NavbarMenu";
+import {Outlet} from "react-router-dom"
+
+
+
+
+export default function Layout(){
+    return (
+        <>
+        <NavbarMenu/>
+        <Outlet/>
+        </>
+    )
+   
+}
