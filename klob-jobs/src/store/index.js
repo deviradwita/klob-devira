@@ -39,7 +39,16 @@ export function JobsReducer(state = initialState, action) {
     })
     return { ...state, Jobs: updatedJobs }
     
-  } else {
+  } else if (action.type === "cancelJob/Success") {
+    const updatedJobs = state.Jobs.map(job => {
+      if (job.jobVacancyCode === action.payload) {
+        return { ...job, applied: false }
+      }
+      return job
+    })
+    return { ...state, Jobs: updatedJobs }
+    
+  }  else {
     return state;
   }
 }

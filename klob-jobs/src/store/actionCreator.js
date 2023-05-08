@@ -28,6 +28,13 @@ export function applyJob(payload){
 }
 
 
+export function cancelJob(payload){
+  return {
+      type : "cancelJob/Success",
+      payload : payload
+  }
+}
+
 
 
 
@@ -96,6 +103,21 @@ export function updateJobApplication(jobVacancyCode) {
       
      
       dispatch(applyJob(jobVacancyCode));
+
+   
+      
+    } catch (error) {
+      console.log(error, "ini error");
+    }
+  };
+}
+
+export function cancelJobApplication(jobVacancyCode) {
+  return async function (dispatch, getState) {
+    try {
+      
+     
+      dispatch(cancelJob(jobVacancyCode));
 
    
       
