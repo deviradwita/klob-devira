@@ -13,11 +13,6 @@ export function JobsReducer(state = initialState, action) {
       ...state,
       Jobs: action.payload,
     };
-  } else if (action.type === "detail/fetchSuccess") {
-    return {
-      ...state,
-      detail: action.payload,
-    };
   } else {
     return state;
   }

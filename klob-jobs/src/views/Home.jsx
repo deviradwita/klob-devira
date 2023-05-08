@@ -7,7 +7,6 @@ import { fetchJobs } from "../store/actionCreator";
 
 export default function Home() {
   const jobs = useSelector((state) => {
-    console.log(state, "Dari home");
     return state?.Jobs;
   });
 

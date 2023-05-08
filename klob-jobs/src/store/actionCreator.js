@@ -7,12 +7,6 @@ export function fetchAllJobs(payload){
     }
 }
 
-export function fetchMyDetail(payload){
-    return {
-        type : "contacts/fetchSuccess",
-        payload : payload
-    }
-}
 
 
 
