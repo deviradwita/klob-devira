@@ -2,9 +2,12 @@ import "./App.css";
 import { RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux"
 import {createBrowserRouter} from "react-router-dom";
-import store from './store'
+import { PersistGate } from 'redux-persist/integration/react';
+import {store, persistor} from './store'
 import Home from "./views/Home";
 import Layout from "./views/Layout";
+import Form from "./components/Form";
+
 
 
 
@@ -20,6 +23,10 @@ const router = createBrowserRouter([
           path: "/",
           element: <Home/>,
         },
+        {
+          path: "/buat-lowongan-kerja",
+          element: <Form/>,
+        },
        
 
     
@@ -30,13 +37,15 @@ const router = createBrowserRouter([
 ]);
 
 
-function App() {
 
+function App() {
   return (
     <Provider store={store}>
-    <RouterProvider router={router} />
-   </Provider>
-  )
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
+    </Provider>
+  );
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import CardJobs from "../components/Card";
@@ -7,6 +7,7 @@ import { fetchJobs } from "../store/actionCreator";
 
 export default function Home() {
   const jobs = useSelector((state) => {
+    console.log(state, "home");
     return state?.Jobs;
   });
 
