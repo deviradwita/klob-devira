@@ -10,8 +10,9 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const jobs = useSelector((state) => {
-    console.log(state, "home");
-    return state?.Jobs;
+    console.log(state.Jobs, "home");
+    let newData = state.Jobs.filter((el) => el.applied === true);
+    return newData;
   });
 
   
@@ -21,7 +22,7 @@ export default function Home() {
   return (
     <>
       <div className="main-div">
-        <h1 className="lowongan">Lowongan Perkerjaan:</h1>
+        <h1 className="lowongan">Lamaran Terkirim:</h1>
         <div>
         <div className="row pb-5 mb-4">
           {jobs?.map((el, index) => {

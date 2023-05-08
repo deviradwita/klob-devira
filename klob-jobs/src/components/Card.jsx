@@ -1,7 +1,22 @@
-import { formatCurrency, formatDate } from "../store/actionCreator";
-import { Link } from "react-router-dom";
+import {  applyJob, formatCurrency, formatDate, updateJobApplication } from "../store/actionCreator";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+
 
 export default function Card({jobs}) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // const appliedJobs = useSelector((state) => state.applyJobs);
+
+  
+
+  const handleApply = () => {
+    dispatch(updateJobApplication(jobs.jobVacancyCode));
+    navigate("/");
+  };
+
 
   return (
     
@@ -35,9 +50,18 @@ export default function Card({jobs}) {
         </button>
         </Link>
        
-        <button className="btn btn-success w-100 mt-3">
+        {/* <button  className="btn btn-success w-100 mt-3">
           Kirim Lamaran
-        </button>
+        </button> */}
+        {jobs.applied ? (
+              <button className="btn btn-secondary w-100 mt-3" disabled>
+                Kirim Lamaran
+              </button>
+            ) : (
+              <button className="btn btn-success w-100 mt-3" onClick={handleApply}>
+                Kirim Lamaran
+              </button>
+            )}
         </div>
       
         

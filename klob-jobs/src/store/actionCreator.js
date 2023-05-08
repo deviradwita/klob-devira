@@ -19,22 +19,37 @@ export function fetchMyDetail(payload){
   }
 }
 
+
+export function applyJob(payload){
+  return {
+      type : "applyJob/Success",
+      payload : payload
+  }
+}
+
+
+
+
+
+
 export function fetchJobs() {
   return async function (dispatch, getState) {
     try {
+      
       let existingData = getState()
-    
+      console.log(existingData, "get state");
+      
       if (existingData.Jobs.length > 0) {
-        return;
+        return existingData
+      } else{
+        const res = await fetch(
+          "http://localhost:3000/fakeJob"
+        );
+        if (!res.ok) throw new Error("something wrong");
+        const data = await res.json();
+        dispatch(fetchAllJobs(data));
       }
-    
-
-      const res = await fetch(
-        "https://test-server-klob.onrender.com/fakeJob/Devira/mei23"
-      );
-      if (!res.ok) throw new Error("something wrong");
-      const data = await res.json();
-      dispatch(fetchAllJobs(data));
+   
     } catch (error) {
       console.log(error, "ini error");
     }
@@ -63,6 +78,7 @@ export function fetchDetail(jobVacancyCode) {
       let detail = existingData.Jobs.filter(el => el.jobVacancyCode === jobVacancyCode);
       // console.log(detail, "action");
       dispatch(fetchMyDetail(detail));
+     
 
      
 
@@ -71,6 +87,25 @@ export function fetchDetail(jobVacancyCode) {
     }
   };
 }
+
+
+
+export function updateJobApplication(jobVacancyCode) {
+  return async function (dispatch, getState) {
+    try {
+      
+     
+      dispatch(applyJob(jobVacancyCode));
+
+   
+      
+    } catch (error) {
+      console.log(error, "ini error");
+    }
+  };
+}
+
+
 
 export function formatCurrency(number) {
   const formatter = new Intl.NumberFormat("id-ID", {
@@ -81,23 +116,23 @@ export function formatCurrency(number) {
   return formatter.format(number);
 }
 
-export function formatDate(dateString) {
-  
-  // const [year, month, day] = dateString?.split("-");
-  // const shortYear = year.slice(-2);
-  // return `${day}/${month}/${shortYear}`;
 
-  const [year, month, day] = dateString.split("-").map(Number);
+
+export function formatDate(dateString) {
+  const [day, month, year] = dateString.split("/").map(Number);
   const now = new Date();
   const elapsedYears = now.getFullYear() - year;
-  const elapsedMonths = now.getMonth() - month;
-  
+  const elapsedMonths = now.getMonth() - (month - 1);
+  const elapsedDays = now.getDate() - day;
+
   if (elapsedYears > 0) {
     return `${elapsedYears} Tahun yang lalu`;
   } else if (elapsedMonths > 0) {
     return `${elapsedMonths} Bulan yang lalu`;
+  } else if (elapsedDays > 0) {
+    return `${elapsedDays} Hari yang lalu`;
   } else {
-    return "Kurang dari sebulan";
+    return "Hari ini";
   }
 }
 

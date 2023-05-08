@@ -8,6 +8,9 @@ import Home from "./views/Home";
 import Layout from "./views/Layout";
 import Form from "./components/Form";
 import Detail from "./views/Detail";
+import Applied from "./views/Applied";
+
+
 
 
 
@@ -31,6 +34,10 @@ const router = createBrowserRouter([
         {
           path: "/detail-lowongan-perkerjaan/:jobVacancyCode",
           element: <Detail/>,
+        },
+        {
+          path: "/lamaran-terkirim",
+          element: <Applied/>,
         },
        
 

@@ -25,6 +25,11 @@ export default function NavbarMenu() {
                   Buat Lowongan
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link to={"/lamaran-terkirim"} className="nav-link me-lg-3" href="#download">
+                  Lamaran Kerja
+                </Link>
+              </li>
             </ul>
 
             
