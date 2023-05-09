@@ -10,7 +10,6 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const jobs = useSelector((state) => {
-    console.log(state, "home");
     return state?.Jobs;
   });
 

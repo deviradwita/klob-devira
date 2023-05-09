@@ -6,12 +6,14 @@ import {
 } from "../store/actionCreator";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import defaultImage from '../assets/no-pictures.png';
+
 
 export default function Card({ jobs }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.pathname);
+  
 
   // const appliedJobs = useSelector((state) => state.applyJobs);
 
@@ -33,6 +35,7 @@ export default function Card({ jobs }) {
             <img
               src={jobs.corporateLogo}
               alt=""
+              onError={(e) => { e.target.src = defaultImage }} 
               className="img-fluid d-block mx-auto mb-3"
               style={{ objectFit: "cover", height: "auto", maxWidth: "50%" }}
             />

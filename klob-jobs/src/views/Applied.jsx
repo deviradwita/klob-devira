@@ -10,9 +10,7 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const jobs = useSelector((state) => {
-    // console.log(state.Jobs, "home");
     let newData = state.Jobs.filter((el) => el.applied === true);
-    console.log(newData, "lamaran");
     return newData;
   });
 

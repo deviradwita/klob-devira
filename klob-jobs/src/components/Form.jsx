@@ -2,13 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addNewJob, generateJobVacancyCode } from "../store/actionCreator";
 import { useDispatch } from "react-redux";
-
+import Alert from "react-bootstrap/Alert";
 
 export default function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  let newCode = generateJobVacancyCode()
-  
+  let newCode = generateJobVacancyCode();
 
   const [submitJob, setSubmitJob] = useState({
     jobVacancyCode: newCode,
@@ -22,11 +21,12 @@ export default function Home() {
     applied: false,
   });
 
+  const [error, setError] = useState("");
+
   const handleChange = (e) => {
     e.preventDefault();
 
     const { value, name } = e.target;
-    console.log(value, name);
     setSubmitJob({
       ...submitJob,
       [name]: value,
@@ -35,10 +35,28 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   
-
-    dispatch(addNewJob(submitJob));
-    navigate("/");
+    if (!submitJob.corporateLogo) {
+      setError("Logo Harus Di isi");
+    } else if (!submitJob.corporateName) {
+      setError("Perusahaan Harus Di isi ");
+    } else if (!submitJob.positionName) {
+      setError("Posisi Harus Di isi");
+    } else if (!submitJob.status) {
+      setError("Status Harus Di isi");
+    } else if (!submitJob.salaryFrom) {
+      setError("Min Gaji Harus Di isi");
+    } else if (isNaN(submitJob.salaryFrom)) {
+      setError("Min Gaji Harus Di isi oleh angka");
+    } else if (!submitJob.salaryTo) {
+      setError("Max Gaji Harus Di isi");
+    } else if (isNaN(submitJob.salaryTo)) {
+      setError("Max Gaji Harus Di isi oleh angka");
+    } else if (!submitJob.postedDate) {
+      setError("Tanggal Harus Di isi");
+    } else {
+      dispatch(addNewJob(submitJob));
+      navigate("/");
+    }
   };
 
   return (
@@ -46,6 +64,11 @@ export default function Home() {
       <div className="main-form">
         <h1 className="lowongan">Buat Lowongan:</h1>
         <div>
+          {error ? (
+            <Alert variant="danger">
+              <p>{error}</p>
+            </Alert>
+          ) : null}
           <form onSubmit={handleSubmit}>
             <div className="form-group mb-3 mt-3">
               <label>Logo Perusahaan</label>
@@ -100,7 +123,7 @@ export default function Home() {
               <label>Kisaran Gaji Karyawan</label>
               <div className="row mt-1 justify-content-between">
                 <input
-                  type="number"
+                  type="text"
                   value={submitJob.salaryFrom}
                   onChange={handleChange}
                   name="salaryFrom"
@@ -109,7 +132,7 @@ export default function Home() {
                 />
                 sampai dengan
                 <input
-                  type="number"
+                  type="text"
                   value={submitJob.salaryTo}
                   name="salaryTo"
                   onChange={handleChange}

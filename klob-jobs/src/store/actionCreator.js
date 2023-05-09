@@ -44,7 +44,6 @@ export function fetchJobs() {
     try {
       
       let existingData = getState()
-      console.log(existingData, "get state");
       
       if (existingData.Jobs.length > 0) {
         return existingData
@@ -82,8 +81,7 @@ export function fetchDetail(jobVacancyCode) {
       let existingData = getState()
     
     
-      let detail = existingData.Jobs.filter(el => el.jobVacancyCode === jobVacancyCode);
-      // console.log(detail, "action");
+      let detail = existingData.Jobs.find(el => el.jobVacancyCode === jobVacancyCode);
       dispatch(fetchMyDetail(detail));
      
 
